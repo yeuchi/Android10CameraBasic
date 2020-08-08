@@ -1,8 +1,10 @@
 # Android10CameraBasic
-Android 10 Camera basics with Scoped Storage.
+Android 10 Camera basics with Scoped Storage. \
 This exercise is an extension from Google documentation, Take Photo <sup>[1]</sup>
 
-### Camera take photo
+
+
+### Camera Basics
 <img width="220" src="https://user-images.githubusercontent.com/1282659/89721363-514ab000-d9a2-11ea-9427-12926681de30.jpg"> <img width="220" src="https://user-images.githubusercontent.com/1282659/89721366-53ad0a00-d9a2-11ea-93fc-297ed243bbf1.jpg">
 
 ### Returns bitmap
@@ -21,11 +23,11 @@ startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
 
 # References
 
-1. 'Take Photo' Google camera tutorial with code 
+1. 'Take Photo' Google camera tutorial with code \
 https://developer.android.com/training/camera/photobasics#java
 
-2. "Getting null uri in onActivityResult after take image capture [duplicate]", answer by bhagyawant biradar, March 27, 2019
+2. "Getting null uri in onActivityResult after take image capture [duplicate]", answer by bhagyawant biradar, March 27, 2019 \
 https://stackoverflow.com/questions/55370426/getting-null-uri-in-onactivityresult-after-take-image-capture
 
-3. "How to get Bitmap from an Uri", StackOverflow
+3. "How to get Bitmap from an Uri", StackOverflow \
 https://www.generacodice.com/en/articolo/730776/How-to-get-Bitmap-from-an-Uri
