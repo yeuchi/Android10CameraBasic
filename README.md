@@ -36,7 +36,7 @@ VM: OpenJDK 64-Bit Server VM by JetBrains s.r.o \
 macOS 10.15.5 \
 GC: ParNew, ConcurrentMarkSweep \
 Memory: 1981M \
-Cores: 8 \
+Cores: 8 
 
 ### Phone
 Samsung Galaxy S9 \
@@ -44,7 +44,7 @@ Model # SM-G960U \
 Hardware version REV1.1 \
 Android version 10 \
 Kernel version 4.9.186 \
-Knox version 3.4.1 \
+Knox version 3.4.1 
 
 # References
 
