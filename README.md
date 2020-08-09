@@ -29,6 +29,25 @@ Returned data is null; retrieve bitmap from photoUri as described in reference <
 
 <img width="220" src="https://user-images.githubusercontent.com/1282659/89721368-5871be00-d9a2-11ea-8bdc-2867532fe841.jpg">
 
+### Android Studio 4.0
+Build #AI-193.6911.18.40.6514223, built on May 20, 2020
+Runtime version: 1.8.0_242-release-1644-b3-6222593 x86_64
+VM: OpenJDK 64-Bit Server VM by JetBrains s.r.o
+macOS 10.15.5
+GC: ParNew, ConcurrentMarkSweep
+Memory: 1981M
+Cores: 8
+Registry: ide.new.welcome.screen.force=true, dart.projects.without.pubspec=true
+Non-Bundled Plugins: google-sceneform-tools
+
+### Phone
+Samsung Galaxy S9 
+Model # SM-G960U
+Hardware version REV1.1
+Android version 10
+Kernel version 4.9.186
+Knox version 3.4.1
+
 # References
 
 1. 'Take Photo' Google camera tutorial with code \
