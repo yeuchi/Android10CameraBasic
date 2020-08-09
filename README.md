@@ -14,7 +14,7 @@ startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
 ```
 Returned data is bitmap in memory
 
-<img width="600" src="https://user-images.githubusercontent.com/1282659/89722241-f23e6880-d9ac-11ea-9bbe-6fafeb15f3cb.png">
+<img width="550" src="https://user-images.githubusercontent.com/1282659/89722241-f23e6880-d9ac-11ea-9bbe-6fafeb15f3cb.png">
 
 <img width="220" src="https://user-images.githubusercontent.com/1282659/89721367-57409100-d9a2-11ea-86d4-a5f0ca4431f8.jpg">
 
@@ -25,7 +25,7 @@ startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
 ```
 Returned data is null; retrieve bitmap from photoUri as described in reference <sup>[2]</sup>
 
-<img width="600" src="https://user-images.githubusercontent.com/1282659/89722240-f10d3b80-d9ac-11ea-9434-6d80aeb0f702.png">
+<img width="700" src="https://user-images.githubusercontent.com/1282659/89722240-f10d3b80-d9ac-11ea-9434-6d80aeb0f702.png">
 
 <img width="220" src="https://user-images.githubusercontent.com/1282659/89721368-5871be00-d9a2-11ea-8bdc-2867532fe841.jpg">
 
