@@ -84,26 +84,25 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
 
             var imageBitmap:Bitmap?=null
+            var photoStore = PhotoStorage(this)
+
 
             if (data != null) {
                 imageBitmap = data?.extras?.get("data") as Bitmap
                 binding?.layout?.imageView?.setImageBitmap(imageBitmap!!)
-                var photoStore = PhotoStorage(this)
                 photoStore.setNames("hello", "goldBucket")
                 val returned = photoStore.save(imageBitmap)
 
                 if(returned != "")
                     Toast.makeText(this, returned, Toast.LENGTH_LONG).show()
             }
-            else {
-                // old alternative
-                // val contentUri = FileProvider.getUriForFile(this, "com.ctyeung.scopedstorage.provider", File(currentPhotoPath)) //You wll get the proper image uri here.
-                // imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentUri)
-                setPic()
-            }
-            if(currentPhotoPath!=null)
-                galleryAddPic()
+            else if(currentPhotoPath!=null) {
 
+                val path = photoURI?.path
+                val bitmap = photoStore.read(currentPhotoPath!!, imageView)
+                binding?.layout?.imageView?.setImageBitmap(bitmap)
+                galleryAddPic(currentPhotoPath!!)
+            }
             revokeUriPermission(photoURI, Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
         }
     }
@@ -128,34 +127,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun galleryAddPic() {
+    private fun galleryAddPic(photoPath:String) {
         Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE).also { mediaScanIntent ->
-            val f = File(currentPhotoPath)
+            val f = File(photoPath)
             mediaScanIntent.data = Uri.fromFile(f)
             sendBroadcast(mediaScanIntent)
         }
-    }
-
-    private fun setPic() {
-        // Get the dimensions of the View
-        val targetW = imageView.width
-        val targetH = imageView.height
-
-        // Get the dimensions of the bitmap
-        val bmOptions = BitmapFactory.Options()
-        bmOptions.inJustDecodeBounds = true
-        BitmapFactory.decodeFile(currentPhotoPath, bmOptions)
-        val photoW = bmOptions.outWidth
-        val photoH = bmOptions.outHeight
-
-        // Determine how much to scale down the image
-        val scaleFactor = Math.max(1, Math.min(photoW / targetW, photoH / targetH))
-
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false
-        bmOptions.inSampleSize = scaleFactor
-        bmOptions.inPurgeable = true
-        val bitmap = BitmapFactory.decodeFile(currentPhotoPath, bmOptions)
-        binding?.layout?.imageView?.setImageBitmap(bitmap)
     }
 }

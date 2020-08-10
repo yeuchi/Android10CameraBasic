@@ -4,9 +4,12 @@ import android.app.RecoverableSecurityException
 import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.ImageView
+import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Exception
 
 class PhotoStorage(val context:Context) {
@@ -15,7 +18,7 @@ class PhotoStorage(val context:Context) {
     var imageUri:Uri?=null
     var values:ContentValues?=null
 
-    fun setNames(displayname:String, bucketName:String){
+    fun setNames(displayname:String, bucketName:String) {
         this.displayname = displayname
         this.bucketName = bucketName
 
@@ -28,6 +31,29 @@ class PhotoStorage(val context:Context) {
 
         val collection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
         imageUri = context.contentResolver.insert(collection, values)
+    }
+
+    fun read(photoPath:String, imageView:ImageView):Bitmap {
+        // Get the dimensions of the View
+        val targetW = imageView.width
+        val targetH = imageView.height
+
+        // Get the dimensions of the bitmap
+        val bmOptions = BitmapFactory.Options()
+        bmOptions.inJustDecodeBounds = true
+        BitmapFactory.decodeFile(photoPath, bmOptions)
+        val photoW = bmOptions.outWidth
+        val photoH = bmOptions.outHeight
+
+        // Determine how much to scale down the image
+        val scaleFactor = Math.max(1, Math.min(photoW / targetW, photoH / targetH))
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false
+        bmOptions.inSampleSize = scaleFactor
+        bmOptions.inPurgeable = true
+        val bitmap = BitmapFactory.decodeFile(photoPath, bmOptions)
+        return bitmap
     }
 
     fun save(bmp:Bitmap):String {
