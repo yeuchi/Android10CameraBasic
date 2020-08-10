@@ -59,5 +59,8 @@ https://stackoverflow.com/questions/55370426/getting-null-uri-in-onactivityresul
 3. "How to get Bitmap from an Uri", StackOverflow \
 https://www.generacodice.com/en/articolo/730776/How-to-get-Bitmap-from-an-Uri
 
-4. "Working with Scoped Storage" by Fernando García Álvarez, October 18, 2019
+4. "Working with Scoped Storage" by Fernando García Álvarez, October 18, 2019 \
 https://proandroiddev.com/working-with-scoped-storage-8a7e7cafea3
+
+5. "Scoped Storage on Android 11" by Fernando García Álvarez, February 19, 2020 \
+https://proandroiddev.com/scoped-storage-on-android-11-2c5da70fb077
