@@ -16,7 +16,7 @@ Returned data is bitmap in memory
 
 <img width="550" src="https://user-images.githubusercontent.com/1282659/89722241-f23e6880-d9ac-11ea-9bbe-6fafeb15f3cb.png">
 
-<img width="220" src="https://user-images.githubusercontent.com/1282659/89721367-57409100-d9a2-11ea-86d4-a5f0ca4431f8.jpg">
+<img width="220" src="https://user-images.githubusercontent.com/1282659/89799169-b8777a00-daf2-11ea-894e-b187cbc27e14.jpg">
 
 Then we persist into storage following Fernando<sup>[4]</sup> tutorial.
 
