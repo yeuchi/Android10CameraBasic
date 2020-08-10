@@ -18,6 +18,8 @@ Returned data is bitmap in memory
 
 <img width="220" src="https://user-images.githubusercontent.com/1282659/89721367-57409100-d9a2-11ea-86d4-a5f0ca4431f8.jpg">
 
+Then we persist into storage following Fernando<sup>[4]</sup> tutorial.
+
 ### Persist -> photoUri (scoped storage)
 ```
 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
@@ -56,3 +58,6 @@ https://stackoverflow.com/questions/55370426/getting-null-uri-in-onactivityresul
 
 3. "How to get Bitmap from an Uri", StackOverflow \
 https://www.generacodice.com/en/articolo/730776/How-to-get-Bitmap-from-an-Uri
+
+4. "Working with Scoped Storage" by Fernando García Álvarez, October 18, 2019
+https://proandroiddev.com/working-with-scoped-storage-8a7e7cafea3
