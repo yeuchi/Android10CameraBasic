@@ -88,7 +88,12 @@ class MainActivity : AppCompatActivity() {
             if (data != null) {
                 imageBitmap = data?.extras?.get("data") as Bitmap
                 binding?.layout?.imageView?.setImageBitmap(imageBitmap!!)
+                var photoStore = PhotoStorage(this)
+                photoStore.setNames("hello", "goldBucket")
+                val returned = photoStore.save(imageBitmap)
 
+                if(returned != "")
+                    Toast.makeText(this, returned, Toast.LENGTH_LONG).show()
             }
             else {
                 // old alternative
@@ -103,6 +108,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /*
+     * Scoped Storage article
+     * https://proandroiddev.com/working-with-scoped-storage-8a7e7cafea3
+     */
 
     @Throws(IOException::class)
     private fun createImageFile(): File {
