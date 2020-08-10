@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
             var photoStore = PhotoStorage(this)
 
 
-            if (data != null) {
+            if (data != null && data?.extras != null) {
                 imageBitmap = data?.extras?.get("data") as Bitmap
                 binding?.layout?.imageView?.setImageBitmap(imageBitmap!!)
                 photoStore.setNames("hello", "goldBucket")
