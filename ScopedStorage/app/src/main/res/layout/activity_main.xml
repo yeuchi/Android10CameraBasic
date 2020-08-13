@@ -33,13 +33,13 @@
         <Button
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="fodo-memory"
+            android:text="photo-memory"
             android:onClick="@{()->layout.onClickBtnMemory()}"/>
 
         <Button
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="fodo-uri"
+            android:text="photo-uri"
             android:onClick="@{()->layout.onClickBtnPhotoUri()}"/>
 
         <ImageView
