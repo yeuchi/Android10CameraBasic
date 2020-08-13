@@ -64,3 +64,6 @@ https://proandroiddev.com/working-with-scoped-storage-8a7e7cafea3
 
 5. "Scoped Storage on Android 11" by Fernando García Álvarez, February 19, 2020 \
 https://proandroiddev.com/scoped-storage-on-android-11-2c5da70fb077
+
+6. "Android Camera App with Examples" by Android Tutorial \
+https://www.tutlane.com/tutorial/android/android-camera-app-with-examples
