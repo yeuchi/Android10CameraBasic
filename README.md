@@ -2,7 +2,11 @@
 Android 10 Camera basics with Scoped Storage. \
 This exercise is an extension from Google documentation, Take Photo <sup>[1]</sup>
 
-
+For Android 11, don't call resolveActivity
+'''
+// Don't call resolve in Android 11, API 30
+// if (takePictureIntent.resolveActivity(packageManager) != null) {
+'''
 
 ### Camera Basics
 <img width="220" src="https://user-images.githubusercontent.com/1282659/89721363-514ab000-d9a2-11ea-9427-12926681de30.jpg"> <img width="220" src="https://user-images.githubusercontent.com/1282659/89721366-53ad0a00-d9a2-11ea-93fc-297ed243bbf1.jpg">
