@@ -43,37 +43,36 @@ class MainActivity : AppCompatActivity() {
         txtSelected.text = "memory"
 
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (takePictureIntent.resolveActivity(packageManager) != null) {
+        // Don't call resolve in Android 11, API 30
+        // if (takePictureIntent.resolveActivity(packageManager) != null) {
             startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
-        }
+       // }
     }
 
     fun onClickBtnPhotoUri() {
         txtSelected.text = "uri"
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        // Don't call resolve in Android 11, API 30
+        // if (takePictureIntent.resolveActivity(packageManager) != null) {
 
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            // Ensure that there's a camera activity to handle the intent
-            takePictureIntent.resolveActivity(packageManager)?.also {
-                // Create the File where the photo should go
-                val photoFile: File? = try {
-                    createImageFile()
-                } catch (ex: IOException) {
-                    // Error occurred while creating the File
-                    Toast.makeText(this, "photoFile Error", Toast.LENGTH_LONG).show()
-                    null
-                }
-                // Continue only if the File was successfully created
-                photoFile?.also {
-                    photoURI = FileProvider.getUriForFile(
-                            context,
-                            "com.ctyeung.scopedstorage.provider",
-                            it
-                    )
-                    grantUriPermission("com.ctyeung.scopedstorage.provider", photoURI, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
-                }
-            }
+        // Create the File where the photo should go
+        val photoFile: File? = try {
+            createImageFile()
+        } catch (ex: IOException) {
+            // Error occurred while creating the File
+            Toast.makeText(this, "photoFile Error", Toast.LENGTH_LONG).show()
+            null
+        }
+        // Continue only if the File was successfully created
+        photoFile?.also {
+            photoURI = FileProvider.getUriForFile(
+                    context,
+                    "com.ctyeung.scopedstorage.provider",
+                    it
+            )
+            grantUriPermission("com.ctyeung.scopedstorage.provider", photoURI, Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+            startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
         }
     }
 
