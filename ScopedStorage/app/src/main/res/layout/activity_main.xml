@@ -42,6 +42,25 @@
             android:text="photo-uri"
             android:onClick="@{()->layout.onClickBtnPhotoUri()}"/>
 
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="load"
+            android:onClick="@{()->layout.onClickBtnLoad()}"/>
+
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="save"
+            android:onClick="@{()->layout.onClickBtnSave()}"/>
+
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="delete"
+            android:onClick="@{()->layout.onClickBtnDelete()}"/>
+
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="300dp"

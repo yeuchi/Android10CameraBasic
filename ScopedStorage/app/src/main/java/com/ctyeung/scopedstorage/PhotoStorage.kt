@@ -1,11 +1,13 @@
 package com.ctyeung.scopedstorage
 
 import android.app.RecoverableSecurityException
+import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.ImageView
@@ -33,7 +35,17 @@ class PhotoStorage(val context:Context) {
         imageUri = context.contentResolver.insert(collection, values)
     }
 
-    fun read(photoPath:String, imageView:ImageView):Bitmap {
+    fun read(contentResolver: ContentResolver,imageView:ImageView):Bitmap? {
+        try {
+            val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, imageUri)
+            return bitmap
+        }
+        catch (e:Exception){
+            return null
+        }
+    }
+
+    fun read(photoPath:String, imageView:ImageView):Bitmap? {
         // Get the dimensions of the View
         val targetW = imageView.width
         val targetH = imageView.height
@@ -73,5 +85,13 @@ class PhotoStorage(val context:Context) {
             return ""
         }
         return "missing imageUri or values"
+    }
+
+    fun delete(context:Context):Boolean {
+        if(imageUri != null) {
+            DocumentsContract.deleteDocument(context.contentResolver, imageUri!!)
+            return true
+        }
+        return false
     }
 }
