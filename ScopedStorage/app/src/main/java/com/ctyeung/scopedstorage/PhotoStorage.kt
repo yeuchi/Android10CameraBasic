@@ -87,7 +87,10 @@ class PhotoStorage(val context:Context) {
         return "missing imageUri or values"
     }
 
-    fun delete(context:Context):Boolean {
+    /*
+     * Android 11 requirement
+     */
+    fun trash(context:Context):Boolean {
         if(imageUri != null) {
             DocumentsContract.deleteDocument(context.contentResolver, imageUri!!)
             return true

@@ -31,6 +31,7 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+    val DELETE_PERMISSION_REQUEST = 0x1033
     val REQUEST_TAKE_PHOTO = 1
     var photoURI:Uri?= null
     var currentPhotoPath: String?=null
@@ -119,16 +120,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     /*
-     * Demo code reference
-     * https://www.droidcon.com/news-detail?content-id=/repository/collaboration/Groups/spaces/droidcon_hq/Documents/public/news/android-news/Scoped%20Storage%20on%20Android%2011
-     */
-    private val DELETE_PERMISSION_REQUEST = 0x1033
-
-    /*
-     * configure trash bin
+     * Android 11 requirement 
      * -> move to trash, not delete
      */
-    fun onClickBtnDelete() {
+    fun onClickBtnTrash() {
         val uris = listOf(photoStore.imageUri)
         val pendingIntent = MediaStore.createDeleteRequest(contentResolver, uris.filter {
             checkUriPermission(it, Binder.getCallingPid(), Binder.getCallingUid(), Intent.FLAG_GRANT_WRITE_URI_PERMISSION) != PackageManager.PERMISSION_GRANTED
@@ -148,7 +143,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             DELETE_PERMISSION_REQUEST -> {
-                photoStore.delete(this)
+                photoStore.trash(this)
             }
 
             else -> {
