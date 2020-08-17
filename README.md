@@ -35,6 +35,10 @@ Returned data is null; retrieve bitmap from photoUri as described in reference <
 
 <img width="220" src="https://user-images.githubusercontent.com/1282659/89721368-5871be00-d9a2-11ea-8bdc-2867532fe841.jpg">
 
+# Android 11 Scoped Storage
+Scope creeped into 11 since it is no longer an option.
+
+
 ### Android Studio 4.0
 Build #AI-193.6911.18.40.6514223, built on May 20, 2020 \
 Runtime version: 1.8.0_242-release-1644-b3-6222593 x86_64 \
