@@ -40,7 +40,7 @@ Scope creeped into 11 since it is no longer an option. \
 Permission is required before moving media into trash bin. \
 Files are no longer deleted directly.
 
-Camera -> Save -> Load -> Delete
+Camera -> Save -> Load -> Delete \
 <img width="220" alt="camera" src="https://user-images.githubusercontent.com/1282659/90450215-c6a73680-e0ae-11ea-9397-e061d3967698.png"> <img width="220" alt="camera confirm" src="https://user-images.githubusercontent.com/1282659/90450219-c870fa00-e0ae-11ea-9449-a2c961a602c3.png"> <img width="220" alt="load" src="https://user-images.githubusercontent.com/1282659/90450222-ca3abd80-e0ae-11ea-8bac-2fbb809a4496.png"> <img width="220" alt="trash permit" src="https://user-images.githubusercontent.com/1282659/90450227-cc048100-e0ae-11ea-85a1-1f0e99663457.png">
 
 ### Android Studio 4.0
