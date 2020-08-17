@@ -2,7 +2,11 @@
 Android 10 Camera basics with Scoped Storage. \
 This exercise is an extension from Google documentation, Take Photo <sup>[1]</sup>
 
-
+For Android 11, don't call resolveActivity
+```
+// Don't call resolve in Android 11, API 30
+// if (takePictureIntent.resolveActivity(packageManager) != null) {
+```
 
 ### Camera Basics
 <img width="220" src="https://user-images.githubusercontent.com/1282659/89721363-514ab000-d9a2-11ea-9427-12926681de30.jpg"> <img width="220" src="https://user-images.githubusercontent.com/1282659/89721366-53ad0a00-d9a2-11ea-93fc-297ed243bbf1.jpg">
@@ -30,6 +34,10 @@ Returned data is null; retrieve bitmap from photoUri as described in reference <
 <img width="900" src="https://user-images.githubusercontent.com/1282659/89722240-f10d3b80-d9ac-11ea-9434-6d80aeb0f702.png">
 
 <img width="220" src="https://user-images.githubusercontent.com/1282659/89721368-5871be00-d9a2-11ea-8bdc-2867532fe841.jpg">
+
+# Android 11 Scoped Storage
+Scope creeped into 11 since it is no longer an option.
+
 
 ### Android Studio 4.0
 Build #AI-193.6911.18.40.6514223, built on May 20, 2020 \
@@ -67,3 +75,6 @@ https://proandroiddev.com/scoped-storage-on-android-11-2c5da70fb077
 
 6. "Android Camera App with Examples" by Android Tutorial \
 https://www.tutlane.com/tutorial/android/android-camera-app-with-examples
+
+7. "Scoped Storage on Android 11" by Fernando García Álvarez on DroidCon, March 24, 2020 \
+https://www.droidcon.com/news-detail?content-id=/repository/collaboration/Groups/spaces/droidcon_hq/Documents/public/news/android-news/Scoped%20Storage%20on%20Android%2011
