@@ -84,3 +84,6 @@ https://www.tutlane.com/tutorial/android/android-camera-app-with-examples
 
 7. "Scoped Storage on Android 11" by Fernando García Álvarez on DroidCon, March 24, 2020 \
 https://www.droidcon.com/news-detail?content-id=/repository/collaboration/Groups/spaces/droidcon_hq/Documents/public/news/android-news/Scoped%20Storage%20on%20Android%2011
+
+8. Google documentation Scoped storage sample \
+https://github.com/android/storage-samples
