@@ -30,9 +30,11 @@ import java.util.*
  */
 
 class MainActivity : AppCompatActivity() {
-
+    val READ_EXTERNAL_STORAGE_REQUEST = 0x1045 // not used
     val DELETE_PERMISSION_REQUEST = 0x1033
+    val TRASH_PERMISSION_REQUEST = 0x1034
     val WRITE_PERMISSION_REQUEST = 0x00000002
+
     val REQUEST_TAKE_PHOTO = 1
     var photoURI:Uri?= null
     var currentPhotoPath: String?=null
@@ -48,6 +50,9 @@ class MainActivity : AppCompatActivity() {
         photoStore = PhotoStorage(this)
     }
 
+    /*
+     * Camera returns bitmap in memory
+     */
     fun onClickBtnMemory() {
         txtSelected.text = "memory"
 
@@ -58,6 +63,9 @@ class MainActivity : AppCompatActivity() {
        // }
     }
 
+    /*
+     * Camera saves image and return uri
+     */
     fun onClickBtnPhotoUri() {
         txtSelected.text = "uri"
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -86,9 +94,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     /*
-     * Read
+     * Read from file
      */
-    fun onClickBtnLoad() {
+    fun onClickBtnRead() {
         var bitmap:Bitmap?=null
         if(currentPhotoPath!=null) {
             bitmap = photoStore.read(currentPhotoPath!!, imageView)
@@ -105,7 +113,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     /*
-     * 1st time or over-write
+     * 1st time save or over-write file
      */
     fun onClickBtnSave() {
         val uris = listOf(photoStore.imageUri)
@@ -116,7 +124,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     /*
-     * Android 11 requirement
+     * Android 11 requirement - trash
+     */
+    fun onClickBtnTrash() {
+        val uris = listOf(photoStore.imageUri)
+        val pendingIntent = MediaStore.createTrashRequest(contentResolver, uris.filter {
+            checkUriPermission(it, Binder.getCallingPid(), Binder.getCallingUid(), Intent.FLAG_GRANT_WRITE_URI_PERMISSION) != PackageManager.PERMISSION_GRANTED
+        }, true)
+        startIntentSenderForResult(pendingIntent.intentSender, TRASH_PERMISSION_REQUEST, null, 0, 0, 0)
+    }
+
+    /*
+     * Android 11 - recover from trash
+     */
+    fun onClickBtnRecover() {
+        val count = photoStore.query(this.contentResolver)
+        Toast.makeText(this, "Num images in trash:"+count, Toast.LENGTH_LONG).show()
+    }
+
+    /*
+     * Android 11 requirement - delete
      */
     fun onClickBtnDelete() {
         val uris = listOf(photoStore.imageUri)
@@ -134,9 +161,11 @@ class MainActivity : AppCompatActivity() {
             when(requestCode) {
                 REQUEST_TAKE_PHOTO -> handleTakePhoto(data)
 
+                WRITE_PERMISSION_REQUEST -> handleWrite()
+
                 DELETE_PERMISSION_REQUEST -> photoStore.delete()
 
-                WRITE_PERMISSION_REQUEST -> handleWrite()
+                TRASH_PERMISSION_REQUEST -> photoStore.trash()
 
                 else -> Toast.makeText(this, "bad request code", Toast.LENGTH_LONG).show()
             }

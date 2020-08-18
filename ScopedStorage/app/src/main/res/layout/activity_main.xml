@@ -11,8 +11,6 @@
             type="com.ctyeung.scopedstorage.MainActivity" />
     </data>
 
-
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -46,8 +44,8 @@
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="load"
-            android:onClick="@{()->layout.onClickBtnLoad()}"/>
+            android:text="read"
+            android:onClick="@{()->layout.onClickBtnRead()}"/>
 
         <Button
             android:layout_width="300dp"
@@ -60,6 +58,19 @@
             android:layout_height="wrap_content"
             android:text="delete"
             android:onClick="@{()->layout.onClickBtnDelete()}"/>
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="trash"
+            android:onClick="@{()->layout.onClickBtnTrash()}"/>
+
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="recover"
+            android:onClick="@{()->layout.onClickBtnRecover()}"/>
 
         <ImageView
             android:id="@+id/imageView"

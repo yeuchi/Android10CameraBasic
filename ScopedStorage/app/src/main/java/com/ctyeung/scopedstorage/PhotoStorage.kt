@@ -1,18 +1,15 @@
 package com.ctyeung.scopedstorage
 
-import android.app.RecoverableSecurityException
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.ImageView
-import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.Exception
 
 class PhotoStorage(val context:Context) {
     var displayname:String?=null
@@ -101,5 +98,40 @@ class PhotoStorage(val context:Context) {
 //        if(imageUri != null) {
 //            DocumentsContract.deleteDocument(context.contentResolver, imageUri!!)
 //        }
+    }
+
+    private var trashImageUri:Uri?=null
+    private var trashValues:ContentValues?=null
+    fun trash() {
+        // hold on for test evaluation only
+        trashImageUri = imageUri
+        trashValues = values
+        delete()
+    }
+
+    fun query(contentResolver: ContentResolver):Int {
+        try {
+            val uri = MediaStore.Files.getContentUri("external_primary")
+
+            // every column, although that is huge waste, you probably need
+            // BaseColumns.DATA (the path) only.
+            val projection: Array<String>? = null
+
+            // exclude media files, they would be here also.
+            val selection = (MediaStore.Files.FileColumns.MEDIA_TYPE + "="
+                    + MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE)
+            val selectionArgs: Array<String>? =
+                null // there is no ? in selection so null here
+
+            val sortOrder: String? = null // unordered
+
+            val allNonMediaFiles: Cursor? =
+                contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)
+
+            return allNonMediaFiles?.count ?: 0
+        }
+        catch (ex:java.lang.Exception) {
+            return -1
+        }
     }
 }
