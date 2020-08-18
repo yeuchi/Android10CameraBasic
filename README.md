@@ -87,3 +87,6 @@ https://www.droidcon.com/news-detail?content-id=/repository/collaboration/Groups
 
 8. Google documentation Scoped storage sample \
 https://github.com/android/storage-samples
+
+9. MediaStore - Uri to query all types of files (media and non-media) \
+https://stackoverflow.com/questions/10384080/mediastore-uri-to-query-all-types-of-files-media-and-non-media
