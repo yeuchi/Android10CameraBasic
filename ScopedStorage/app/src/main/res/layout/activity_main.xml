@@ -58,8 +58,8 @@
         <Button
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:text="trash"
-            android:onClick="@{()->layout.onClickBtnTrash()}"/>
+            android:text="delete"
+            android:onClick="@{()->layout.onClickBtnDelete()}"/>
 
         <ImageView
             android:id="@+id/imageView"

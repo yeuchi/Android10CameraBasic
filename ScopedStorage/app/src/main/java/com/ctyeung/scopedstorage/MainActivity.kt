@@ -32,6 +32,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     val DELETE_PERMISSION_REQUEST = 0x1033
+    val WRITE_PERMISSION_REQUEST = 0x00000002
     val REQUEST_TAKE_PHOTO = 1
     var photoURI:Uri?= null
     var currentPhotoPath: String?=null
@@ -107,23 +108,17 @@ class MainActivity : AppCompatActivity() {
      * 1st time or over-write
      */
     fun onClickBtnSave() {
-        val w = binding?.imageView?.width
-        val h = binding?.imageView?.height
-        val drawable = binding?.layout?.imageView?.drawable
-        val bitmap = drawable?.toBitmap(w, h)
-        if(bitmap != null) {
-            val retVal = photoStore.save(bitmap)
-            if (retVal.length==0)
-                return
-        }
-        Toast.makeText(this, "Save failed", Toast.LENGTH_LONG).show()
+        val uris = listOf(photoStore.imageUri)
+        val pendingIntent = MediaStore.createWriteRequest(contentResolver, uris.filter {
+            checkUriPermission(it, Binder.getCallingPid(), Binder.getCallingUid(), Intent.FLAG_GRANT_WRITE_URI_PERMISSION) != PackageManager.PERMISSION_GRANTED
+        })
+        startIntentSenderForResult(pendingIntent.intentSender, WRITE_PERMISSION_REQUEST, null, 0, 0, 0)
     }
 
     /*
-     * Android 11 requirement 
-     * -> move to trash, not delete
+     * Android 11 requirement
      */
-    fun onClickBtnTrash() {
+    fun onClickBtnDelete() {
         val uris = listOf(photoStore.imageUri)
         val pendingIntent = MediaStore.createDeleteRequest(contentResolver, uris.filter {
             checkUriPermission(it, Binder.getCallingPid(), Binder.getCallingUid(), Intent.FLAG_GRANT_WRITE_URI_PERMISSION) != PackageManager.PERMISSION_GRANTED
@@ -135,21 +130,32 @@ class MainActivity : AppCompatActivity() {
                                   resultCode: Int,
                                   data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        when(requestCode){
-            REQUEST_TAKE_PHOTO -> {
-                if (resultCode == RESULT_OK) {
-                    handleTakePhoto(data)
-                }
-            }
+        if (resultCode == RESULT_OK) {
+            when(requestCode) {
+                REQUEST_TAKE_PHOTO -> handleTakePhoto(data)
 
-            DELETE_PERMISSION_REQUEST -> {
-                photoStore.trash(this)
-            }
+                DELETE_PERMISSION_REQUEST -> photoStore.delete()
 
-            else -> {
-                Toast.makeText(this, "bad request code", Toast.LENGTH_LONG).show()
+                WRITE_PERMISSION_REQUEST -> handleWrite()
+
+                else -> Toast.makeText(this, "bad request code", Toast.LENGTH_LONG).show()
             }
+            return
         }
+        Toast.makeText(this, "resultCode NOT OK", Toast.LENGTH_LONG).show()
+    }
+
+    fun handleWrite() {
+        val w = binding?.imageView?.width
+        val h = binding?.imageView?.height
+        val drawable = binding?.layout?.imageView?.drawable
+        val bitmap = drawable?.toBitmap(w, h)
+        if(bitmap != null) {
+            val retVal = photoStore.save(bitmap)
+            if (retVal.length==0)
+                return
+        }
+        Toast.makeText(this, "Save failed", Toast.LENGTH_LONG).show()
     }
 
     fun handleTakePhoto(data: Intent?) {

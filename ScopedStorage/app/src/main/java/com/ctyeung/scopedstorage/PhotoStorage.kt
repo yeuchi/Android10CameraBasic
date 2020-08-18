@@ -68,6 +68,9 @@ class PhotoStorage(val context:Context) {
         return bitmap
     }
 
+    /*
+     * 1st time save or over-write
+     */
     fun save(bmp:Bitmap):String {
         if(imageUri != null && values != null) {
             try {
@@ -89,12 +92,14 @@ class PhotoStorage(val context:Context) {
 
     /*
      * Android 11 requirement
+     * File is already marked deleted
      */
-    fun trash(context:Context):Boolean {
-        if(imageUri != null) {
-            DocumentsContract.deleteDocument(context.contentResolver, imageUri!!)
-            return true
-        }
-        return false
+    fun delete() {
+        imageUri = null
+        values = null
+// Not necessary
+//        if(imageUri != null) {
+//            DocumentsContract.deleteDocument(context.contentResolver, imageUri!!)
+//        }
     }
 }
