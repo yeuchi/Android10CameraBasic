@@ -22,6 +22,7 @@ import com.ctyeung.scopedstorage.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.io.IOException
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -116,22 +117,56 @@ class MainActivity : AppCompatActivity() {
      * 1st time save or over-write file
      */
     fun onClickBtnSave() {
-        val uris = listOf(photoStore.imageUri)
-        val pendingIntent = MediaStore.createWriteRequest(contentResolver, uris.filter {
-            checkUriPermission(it, Binder.getCallingPid(), Binder.getCallingUid(), Intent.FLAG_GRANT_WRITE_URI_PERMISSION) != PackageManager.PERMISSION_GRANTED
-        })
-        startIntentSenderForResult(pendingIntent.intentSender, WRITE_PERMISSION_REQUEST, null, 0, 0, 0)
+        try {
+            val uris = listOf(photoStore.imageUri)
+            val pendingIntent = MediaStore.createWriteRequest(contentResolver, uris.filter {
+                checkUriPermission(
+                    it,
+                    Binder.getCallingPid(),
+                    Binder.getCallingUid(),
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                ) != PackageManager.PERMISSION_GRANTED
+            })
+            startIntentSenderForResult(
+                pendingIntent.intentSender,
+                WRITE_PERMISSION_REQUEST,
+                null,
+                0,
+                0,
+                0
+            )
+        }
+        catch (ex:Exception) {
+            Toast.makeText(this, "failed, already applied?", Toast.LENGTH_LONG).show()
+        }
     }
 
     /*
      * Android 11 requirement - trash
      */
     fun onClickBtnTrash() {
-        val uris = listOf(photoStore.imageUri)
-        val pendingIntent = MediaStore.createTrashRequest(contentResolver, uris.filter {
-            checkUriPermission(it, Binder.getCallingPid(), Binder.getCallingUid(), Intent.FLAG_GRANT_WRITE_URI_PERMISSION) != PackageManager.PERMISSION_GRANTED
-        }, true)
-        startIntentSenderForResult(pendingIntent.intentSender, TRASH_PERMISSION_REQUEST, null, 0, 0, 0)
+        try {
+            val uris = listOf(photoStore.imageUri)
+            val pendingIntent = MediaStore.createTrashRequest(contentResolver, uris.filter {
+                checkUriPermission(
+                    it,
+                    Binder.getCallingPid(),
+                    Binder.getCallingUid(),
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                ) != PackageManager.PERMISSION_GRANTED
+            }, true)
+            startIntentSenderForResult(
+                pendingIntent.intentSender,
+                TRASH_PERMISSION_REQUEST,
+                null,
+                0,
+                0,
+                0
+            )
+        }
+        catch (ex:Exception) {
+            Toast.makeText(this, "failed, already applied?", Toast.LENGTH_LONG).show()
+        }
     }
 
     /*
@@ -146,11 +181,28 @@ class MainActivity : AppCompatActivity() {
      * Android 11 requirement - delete
      */
     fun onClickBtnDelete() {
-        val uris = listOf(photoStore.imageUri)
-        val pendingIntent = MediaStore.createDeleteRequest(contentResolver, uris.filter {
-            checkUriPermission(it, Binder.getCallingPid(), Binder.getCallingUid(), Intent.FLAG_GRANT_WRITE_URI_PERMISSION) != PackageManager.PERMISSION_GRANTED
-        })
-        startIntentSenderForResult(pendingIntent.intentSender, DELETE_PERMISSION_REQUEST, null, 0, 0, 0)
+        try {
+            val uris = listOf(photoStore.imageUri)
+            val pendingIntent = MediaStore.createDeleteRequest(contentResolver, uris.filter {
+                checkUriPermission(
+                    it,
+                    Binder.getCallingPid(),
+                    Binder.getCallingUid(),
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                ) != PackageManager.PERMISSION_GRANTED
+            })
+            startIntentSenderForResult(
+                pendingIntent.intentSender,
+                DELETE_PERMISSION_REQUEST,
+                null,
+                0,
+                0,
+                0
+            )
+        }
+        catch (ex:Exception) {
+            Toast.makeText(this, "failed, already applied?", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onActivityResult(requestCode: Int,
