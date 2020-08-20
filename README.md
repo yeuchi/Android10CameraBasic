@@ -90,3 +90,7 @@ https://github.com/android/storage-samples
 
 9. MediaStore - Uri to query all types of files (media and non-media) \
 https://stackoverflow.com/questions/10384080/mediastore-uri-to-query-all-types-of-files-media-and-non-media
+
+10. The Android Open Source Project (Sample code) - MediaStore.java, copyright 2007
+https://android.googlesource.com/platform/frameworks/base.git/+/master/core/java/android/provider/MediaStore.java
+https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/provider/MediaStore.java
