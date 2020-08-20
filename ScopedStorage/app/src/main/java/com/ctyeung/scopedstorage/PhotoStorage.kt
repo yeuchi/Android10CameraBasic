@@ -116,7 +116,14 @@ class PhotoStorage(val context:Context) {
      */
     fun query(contentResolver: ContentResolver):Int {
         try {
+            /*
+             * untrashed in article
+             * https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/provider/MediaStore.java
+             * https://android.googlesource.com/platform/frameworks/base.git/+/master/core/java/android/provider/MediaStore.java
+             *
+             */
             val uri = MediaStore.Files.getContentUri("external_primary")
+            uri.buildUpon().appendQueryParameter("includeTrashed", "1").build()
 
             // every column, although that is huge waste, you probably need
             // BaseColumns.DATA (the path) only.
