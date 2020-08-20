@@ -91,7 +91,8 @@ class PhotoStorage(val context:Context) {
      * Android 11 requirement
      * File is already marked deleted
      */
-    fun delete() {
+    fun delete(imageView:ImageView?) {
+        imageView?.setImageBitmap(null)
         imageUri = null
         values = null
 // Not necessary
@@ -102,11 +103,11 @@ class PhotoStorage(val context:Context) {
 
     private var trashImageUri:Uri?=null
     private var trashValues:ContentValues?=null
-    fun trash() {
+    fun trash(imageView: ImageView?) {
         // hold on for test evaluation only
         trashImageUri = imageUri
         trashValues = values
-        delete()
+        delete(imageView)
     }
 
     /*

@@ -215,9 +215,9 @@ class MainActivity : AppCompatActivity() {
 
                 WRITE_PERMISSION_REQUEST -> handleWrite()
 
-                DELETE_PERMISSION_REQUEST -> photoStore.delete()
+                DELETE_PERMISSION_REQUEST -> photoStore.delete(imageView)
 
-                TRASH_PERMISSION_REQUEST -> photoStore.trash()
+                TRASH_PERMISSION_REQUEST -> photoStore.trash(imageView)
 
                 else -> Toast.makeText(this, "bad request code", Toast.LENGTH_LONG).show()
             }
