@@ -114,7 +114,7 @@ class PhotoStorage(val context:Context) {
      * work in progress
      * - how to query mediaStore for IS_TRASHED ?
      */
-    fun query(contentResolver: ContentResolver):Int {
+    fun getTrashCount(contentResolver: ContentResolver):Int {
         try {
             /*
              * untrashed in article
@@ -147,5 +147,9 @@ class PhotoStorage(val context:Context) {
         catch (ex:java.lang.Exception) {
             return -1
         }
+    }
+
+    fun untrashLast(contentResolver: ContentResolver) {
+        // populate imageUri and value
     }
 }

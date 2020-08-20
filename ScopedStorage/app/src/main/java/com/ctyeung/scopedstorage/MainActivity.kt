@@ -173,7 +173,11 @@ class MainActivity : AppCompatActivity() {
      * Android 11 - recover from trash
      */
     fun onClickBtnRecover() {
-        val count = photoStore.query(this.contentResolver)
+        val count = photoStore.getTrashCount(this.contentResolver)
+        if(count>0) {
+            photoStore.untrashLast(this.contentResolver)
+            // load into imageview
+        }
         Toast.makeText(this, "Num images in trash:"+count, Toast.LENGTH_LONG).show()
     }
 
