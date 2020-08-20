@@ -109,6 +109,10 @@ class PhotoStorage(val context:Context) {
         delete()
     }
 
+    /*
+     * work in progress
+     * - how to query mediaStore for IS_TRASHED ?
+     */
     fun query(contentResolver: ContentResolver):Int {
         try {
             val uri = MediaStore.Files.getContentUri("external_primary")
@@ -116,18 +120,20 @@ class PhotoStorage(val context:Context) {
             // every column, although that is huge waste, you probably need
             // BaseColumns.DATA (the path) only.
             val projection: Array<String>? = null
-
-            // exclude media files, they would be here also.
-            val selection = (MediaStore.Files.FileColumns.MEDIA_TYPE + "="
-                    + MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE)
-            val selectionArgs: Array<String>? =
-                null // there is no ? in selection so null here
-
+            val selection = (MediaStore.Files.FileColumns.MEDIA_TYPE + "=" + MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE)
+            val selectionArgs: Array<String>? = null // there is no ? in selection so null here
             val sortOrder: String? = null // unordered
 
-            val allNonMediaFiles: Cursor? =
-                contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)
+            /*
+             * https://www.codota.com/code/java/methods/android.provider.MediaStore$Images$Media/query
+             */
+            // invalid arguments
+            //val proj: Array<String> = arrayOf(MediaStore.MediaColumns.IS_TRASHED, MediaStore.QUERY_ARG_MATCH_TRASHED)
+//            val proj: Array<String> = arrayOf(MediaStore.Images.Media.DATA)
+//            val cursor = MediaStore.Images.Media.query(contentResolver, uri, proj)
+//            return cursor?.count ?: 0
 
+            val allNonMediaFiles: Cursor? = contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)
             return allNonMediaFiles?.count ?: 0
         }
         catch (ex:java.lang.Exception) {
