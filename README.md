@@ -38,11 +38,12 @@ Returned data is null; retrieve bitmap from photoUri as described in reference <
 # Android 11 Scoped Storage
 Scope creeped into 11 since it is no longer an option. \
 Permission is required before moving media into trash bin. \
-Files are no longer deleted directly.
+'Trashed' status is a MediaStore marking on the file's meta-data. \
+'Untrash' can be performed prior to the expiration time via MediaStore update query.
 
 Camera -> Save -> Load -> Overwrite -> Trash \
 <img width="220" alt="camera" src="https://user-images.githubusercontent.com/1282659/90450215-c6a73680-e0ae-11ea-9397-e061d3967698.png"> <img width="220" alt="camera confirm" src="https://user-images.githubusercontent.com/1282659/90450219-c870fa00-e0ae-11ea-9449-a2c961a602c3.png"> <img width="220" alt="load" src="https://user-images.githubusercontent.com/1282659/90450222-ca3abd80-e0ae-11ea-8bac-2fbb809a4496.png"> 
-<img width="220" alt="write" src="https://user-images.githubusercontent.com/1282659/90522971-f8151600-e131-11ea-9cdc-ba6622351993.png"> <img width="220" alt="trash permit" src="https://user-images.githubusercontent.com/1282659/90450227-cc048100-e0ae-11ea-85a1-1f0e99663457.png"> <img width="220" alt="Screen Shot 2020-08-21 at 1 00 06 PM" src="https://user-images.githubusercontent.com/1282659/90920670-53ebd300-e3ae-11ea-9dfc-95e68cd949f9.png">
+<img width="220" alt="write" src="https://user-images.githubusercontent.com/1282659/90522971-f8151600-e131-11ea-9cdc-ba6622351993.png"> <img width="220" alt="Screen Shot 2020-08-21 at 1 00 06 PM" src="https://user-images.githubusercontent.com/1282659/90920670-53ebd300-e3ae-11ea-9dfc-95e68cd949f9.png"> (Recoverable)
 
 
 
