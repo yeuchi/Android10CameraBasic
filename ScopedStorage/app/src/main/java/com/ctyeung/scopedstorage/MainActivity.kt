@@ -99,18 +99,16 @@ class MainActivity : AppCompatActivity() {
      */
     fun onClickBtnRead() {
         var bitmap:Bitmap?=null
+        var isSuccess:Boolean = false
         if(currentPhotoPath!=null) {
-            bitmap = photoStore.read(currentPhotoPath!!, imageView)
+            isSuccess = photoStore.read(currentPhotoPath!!, imageView)
         }
         else {
-            bitmap = photoStore.read(this.contentResolver, imageView)
+            isSuccess = photoStore.read(this.contentResolver, imageView)
         }
 
-        if(bitmap != null) {
-            binding?.layout?.imageView?.setImageBitmap(bitmap)
-            return
-        }
-        Toast.makeText(this, "read failed", Toast.LENGTH_LONG).show()
+        if(!isSuccess)
+            Toast.makeText(this, "read failed", Toast.LENGTH_LONG).show()
     }
 
     /*
@@ -176,7 +174,7 @@ class MainActivity : AppCompatActivity() {
         val count = photoStore.getTrashCount(this.contentResolver)
         if(count>0) {
             photoStore.untrashLast(this.contentResolver)
-            // load into imageview
+            photoStore.read(this.contentResolver, imageView)
         }
         Toast.makeText(this, "Num images in trash:"+count, Toast.LENGTH_LONG).show()
     }
@@ -256,9 +254,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, returned, Toast.LENGTH_LONG).show()
         }
         else if(currentPhotoPath!=null) {
-
-            val bitmap = photoStore.read(currentPhotoPath!!, imageView)
-            binding?.layout?.imageView?.setImageBitmap(bitmap)
+            photoStore.read(currentPhotoPath!!, imageView)
             galleryAddPic(currentPhotoPath!!)
         }
         //revokeUriPermission(photoURI, Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)

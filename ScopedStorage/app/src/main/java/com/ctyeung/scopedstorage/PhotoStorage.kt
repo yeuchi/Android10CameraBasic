@@ -8,8 +8,12 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
+import android.provider.MediaStore.MediaColumns
+import android.text.format.DateUtils
 import android.util.Log
 import android.widget.ImageView
+import kotlinx.android.synthetic.main.activity_main.*
+
 
 class PhotoStorage(val context:Context) {
     var displayname:String?=null
@@ -32,37 +36,50 @@ class PhotoStorage(val context:Context) {
         imageUri = context.contentResolver.insert(collection, values)
     }
 
-    fun read(contentResolver: ContentResolver,imageView:ImageView):Bitmap? {
+    fun read(contentResolver: ContentResolver,imageView:ImageView):Boolean {
         try {
             val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, imageUri)
-            return bitmap
+            if(bitmap == null)
+                throw java.lang.Exception()
+
+            imageView?.setImageBitmap(bitmap!!)
+            return true
         }
         catch (e:Exception){
-            return null
+            return false
         }
     }
 
-    fun read(photoPath:String, imageView:ImageView):Bitmap? {
-        // Get the dimensions of the View
-        val targetW = imageView.width
-        val targetH = imageView.height
+    fun read(photoPath:String, imageView:ImageView):Boolean {
+        try {
+            // Get the dimensions of the View
+            val targetW = imageView.width
+            val targetH = imageView.height
 
-        // Get the dimensions of the bitmap
-        val bmOptions = BitmapFactory.Options()
-        bmOptions.inJustDecodeBounds = true
-        BitmapFactory.decodeFile(photoPath, bmOptions)
-        val photoW = bmOptions.outWidth
-        val photoH = bmOptions.outHeight
+            // Get the dimensions of the bitmap
+            val bmOptions = BitmapFactory.Options()
+            bmOptions.inJustDecodeBounds = true
+            BitmapFactory.decodeFile(photoPath, bmOptions)
+            val photoW = bmOptions.outWidth
+            val photoH = bmOptions.outHeight
 
-        // Determine how much to scale down the image
-        val scaleFactor = Math.max(1, Math.min(photoW / targetW, photoH / targetH))
+            // Determine how much to scale down the image
+            val scaleFactor = Math.max(1, Math.min(photoW / targetW, photoH / targetH))
 
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false
-        bmOptions.inSampleSize = scaleFactor
-        bmOptions.inPurgeable = true
-        val bitmap = BitmapFactory.decodeFile(photoPath, bmOptions)
-        return bitmap
+            // Decode the image file into a Bitmap sized to fill the View
+            bmOptions.inJustDecodeBounds = false
+            bmOptions.inSampleSize = scaleFactor
+            bmOptions.inPurgeable = true
+            val bitmap = BitmapFactory.decodeFile(photoPath, bmOptions)
+            if(bitmap == null)
+                throw java.lang.Exception()
+
+            imageView?.setImageBitmap(bitmap!!)
+            return true
+        }
+        catch (ex:java.lang.Exception){
+            return false
+        }
     }
 
     /*
@@ -103,11 +120,19 @@ class PhotoStorage(val context:Context) {
 
     private var trashImageUri:Uri?=null
     private var trashValues:ContentValues?=null
+
     fun trash(imageView: ImageView?) {
-        // hold on for test evaluation only
-        trashImageUri = imageUri
-        trashValues = values
-        delete(imageView)
+        if(imageUri != null) {
+            val timeoutMillis = 48 * DateUtils.HOUR_IN_MILLIS
+            val values = ContentValues()
+            values.put(MediaColumns.IS_TRASHED, 1)
+            values.put(MediaColumns.DATE_EXPIRES, (System.currentTimeMillis() + timeoutMillis) / 1000)
+            context.contentResolver.update(imageUri!!, values, null, null)
+            // hold on for test evaluation only
+            trashImageUri = imageUri
+            trashValues = values
+            delete(imageView)
+        }
     }
 
     /*
@@ -131,18 +156,17 @@ class PhotoStorage(val context:Context) {
             val selection = (MediaStore.Files.FileColumns.MEDIA_TYPE + "=" + MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE)
             val selectionArgs: Array<String>? = null // there is no ? in selection so null here
             val sortOrder: String? = null // unordered
+            val allNonMediaFiles: Cursor? = contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)
+            return allNonMediaFiles?.count ?: 0
 
             /*
              * https://www.codota.com/code/java/methods/android.provider.MediaStore$Images$Media/query
+             * Not functional yet... work in progress
              */
             // invalid arguments
-            //val proj: Array<String> = arrayOf(MediaStore.MediaColumns.IS_TRASHED, MediaStore.QUERY_ARG_MATCH_TRASHED)
-//            val proj: Array<String> = arrayOf(MediaStore.Images.Media.DATA)
+//            val proj: Array<String> = arrayOf(MediaStore.MediaColumns.IS_TRASHED)
 //            val cursor = MediaStore.Images.Media.query(contentResolver, uri, proj)
 //            return cursor?.count ?: 0
-
-            val allNonMediaFiles: Cursor? = contentResolver.query(uri, projection, selection, selectionArgs, sortOrder)
-            return allNonMediaFiles?.count ?: 0
         }
         catch (ex:java.lang.Exception) {
             return -1
@@ -150,6 +174,15 @@ class PhotoStorage(val context:Context) {
     }
 
     fun untrashLast(contentResolver: ContentResolver) {
-        // populate imageUri and value
+        if(trashImageUri != null) {
+            values = ContentValues();
+            values!!.put(MediaColumns.IS_TRASHED, 0);
+            values!!.putNull(MediaColumns.DATE_EXPIRES);
+            context.getContentResolver().update(trashImageUri!!, values, null, null);
+
+            imageUri = trashImageUri
+            trashValues = null
+            trashImageUri = null
+        }
     }
 }
