@@ -1,5 +1,5 @@
-# Android10CameraBasic
-Android 10 Camera basics with Scoped Storage. \
+# Android11CameraBasic
+Android 11 Camera basics with Scoped Storage. \
 This exercise is an extension from Google documentation, Take Photo <sup>[1]</sup>
 
 For Android 11, don't call resolveActivity
