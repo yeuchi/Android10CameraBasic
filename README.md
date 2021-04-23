@@ -96,3 +96,6 @@ https://stackoverflow.com/questions/10384080/mediastore-uri-to-query-all-types-o
 10. The Android Open Source Project (Sample code) - MediaStore.java, copyright 2007
 https://android.googlesource.com/platform/frameworks/base.git/+/master/core/java/android/provider/MediaStore.java
 https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/provider/MediaStore.java
+
+11. Media Store - createTrashRequest \
+https://developer.android.com/training/data-storage/shared/media#remove-item
